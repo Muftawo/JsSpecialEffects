@@ -19,6 +19,14 @@ class Particle {
         this.minRadius = 2;
         this.radius = Math.random() * this.maxRadius + this.minRadius;
 
+        // particle cordinates
+        this.x = this.radius + Math.random() * (this.effect.width - this.radius * 2);
+        this.y = this.radius + Math.random() * (this.effect.height - this.radius * 2);
+
+        // particle velocity 
+        this.vx = Math.random() * 2 - 0.5;
+        this.vy = Math.random() * 2 - 0.5;
+
     }
 
     draw(context) {
