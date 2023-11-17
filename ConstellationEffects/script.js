@@ -4,9 +4,14 @@ const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 console.log(ctx);
+console.log(canvas);
+const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+gradient.addColorStop(0, 'white');
+gradient.addColorStop(0.5, 'magenta');
+gradient.addColorStop(1, 'blue');
 
-context.fillStyle = 'white';
-
+ctx.fillStyle = gradient;
+ctx.strokeStyle = 'white';
 class Particle {
     constructor(effect) {
         this.effect = effect;
