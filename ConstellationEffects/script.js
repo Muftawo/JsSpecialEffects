@@ -73,9 +73,32 @@ class Effect {
         }
     }
     handleParticles(context) {
+        this.connectParticles(context);
         this.particles.forEach(particle => {
             particle.draw(context);
+            particle.update();
         });
+    }
+    connectParticles(context) {
+        const maxDistance = 100;
+        for (let a = 0; a < this.particles.length; a++) {
+            for (let b = a; b < this.particles.length; b++) {
+                const dx = this.particles[a].x - this.particles[b].x;
+                const dy = this.particles[a].y - this.particles[b].y;
+                const distance = Math.hypot(dx, dy);
+                if (distance < maxDistance) {
+                    context.save();
+                    const opacity = 1 - (distance / maxDistance);
+                    context.globalAlpha = opacity;
+                    context.beginPath();
+                    context.moveTo(this.particles[a].x, this.particles[a].y);
+                    context.lineTo(this.particles[b].x, this.particles[b].y);
+                    context.stroke();
+                    context.restore();
+
+                }
+            }
+        }
     }
 
 }
