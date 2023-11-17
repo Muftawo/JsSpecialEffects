@@ -15,9 +15,10 @@ ctx.strokeStyle = 'white';
 class Particle {
     constructor(effect) {
         this.effect = effect;
-        this.x = Math.random() * this.effect.width;
-        this.y = Math.random() * this.effect.height;
-        this.radius = 15;
+        this.maxRadius = 6;
+        this.minRadius = 2;
+        this.radius = Math.random() * this.maxRadius + this.minRadius;
+
     }
 
     draw(context) {
