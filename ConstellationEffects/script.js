@@ -36,7 +36,12 @@ class Particle {
         context.fill();
         context.stroke();
     }
+    changeRadius() {
+        this.radius += (Math.random() < 0.5 ? -1 : 1);
+        this.radius = Math.max(this.minRadius, Math.min(this.maxRadius, this.radius));
 
+        // console.log(`radius ${this.radius} x = ${this.x} y ${this.y} vx ${this.vx} vy ${this.vy}`);
+    }
 }
 
 class Effect {
