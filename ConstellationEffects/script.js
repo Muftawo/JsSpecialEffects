@@ -49,14 +49,16 @@ class Particle {
         // particle cordinates
         this.setPosition();
         // particle velocity 
+        this.setVelocity();
+
     setPosition() {
         this.x = this.radius + Math.random() * (this.effect.width - this.radius * 2);
         this.y = this.radius + Math.random() * (this.effect.height - this.radius * 2);
     }
 
-        this.vx = Math.random() * 2 - 0.5;
-        this.vy = Math.random() * 2 - 0.5;
-
+    setVelocity() {
+        this.vx = Math.random() * parameters.particleMaxVelocity - parameters.particleMinVelocity;
+        this.vy = Math.random() * parameters.particleMaxVelocity - parameters.particleMinVelocity;
     }
 
     draw(context) {
