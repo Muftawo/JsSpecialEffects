@@ -125,8 +125,9 @@ class Particle {
 }
 
 class Effect {
-    constructor(canvas) {
+    constructor(canvas, context, numberOfParticles) {
         this.canvas = canvas;
+        this.context = context;
         this.width = this.canvas.width;
         this.height = this.canvas.height;
         this.particles = [];
@@ -214,7 +215,7 @@ class Effect {
 }
 
 
-const effect = new Effect(canvas);
+const effect = new Effect(canvas, ctx, parameters.numberOfParticles);
 
 
 function animate() {
