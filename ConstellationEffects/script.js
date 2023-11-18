@@ -42,8 +42,8 @@ ctx.strokeStyle = 'white';
 class Particle {
     constructor(effect) {
         this.effect = effect;
-        this.maxRadius = 6;
-        this.minRadius = 2;
+        this.maxRadius = parameters.particleMaxRadius;
+        this.minRadius = parameters.particleMinRadius;
         this.radius = Math.random() * this.maxRadius + this.minRadius;
 
         // particle cordinates
