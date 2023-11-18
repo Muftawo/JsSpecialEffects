@@ -24,7 +24,10 @@ function getGradient(context, width, height){
     return gradient
 }
 
+
+ctx.fillStyle = getGradient(ctx, canvas.width, canvas.height);
 ctx.strokeStyle = 'white';
+
 class Particle {
     constructor(effect) {
         this.effect = effect;
