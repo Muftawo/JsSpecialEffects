@@ -130,8 +130,36 @@ class Effect {
         this.width = this.canvas.width;
         this.height = this.canvas.height;
         this.particles = [];
-        this.numberOfParticles = 20; // change this later to user input 
+        this.numberOfParticles = numberOfParticles ?? parameters.numberOfParticlesDefault; // change this later to user input 
         this.createParticles();
+
+        this.mouse = {
+            x: 0,
+            y: 0,
+            pressed: false,
+            radius: parameters.mouseRadius
+        }
+        window.addEventListener('resize', e => {
+            this.resize(e.target.window.innerWidth, e.target.innerHeight);
+        })
+        window.addEventListener('mousemove', e => {
+            if (this.mouse.pressed) {
+                this.mouse.x = e.x;
+                this.mouse.y = e.y;
+
+            }
+        })
+        window.addEventListener('mousedown', e => {
+            this.mouse.pressed = true;
+            this.mouse.x = e.x;
+            this.mouse.y = e.y;
+
+        })
+        window.addEventListener('mouseup', e => {
+            this.mouse.pressed = false;
+        })
+
+
     }
     createParticles() {
         for (let i = 0; i < this.numberOfParticles; i++) {
