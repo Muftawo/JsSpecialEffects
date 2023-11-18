@@ -51,6 +51,13 @@ class Particle {
         // particle velocity 
         this.setVelocity();
 
+        // mouse push velocity
+        this.pushX = 0;
+        this.pushY = 0;
+        this.friction = parameters.particleMouseFriction;
+
+    }
+
     setPosition() {
         this.x = this.radius + Math.random() * (this.effect.width - this.radius * 2);
         this.y = this.radius + Math.random() * (this.effect.height - this.radius * 2);
