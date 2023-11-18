@@ -70,9 +70,21 @@ class Particle {
         // console.log(`radius ${this.radius} x = ${this.x} y ${this.y} vx ${this.vx} vy ${this.vy}`);
     }
 
-    update() {
-        this.x += this.vx;
-        if (this.x > this.effect.width - this.radius || this.x < this.radius) {
+    onMousePressed() {
+        if (this.effect.mouse.pressed) {
+            const dx = this.x - this.effect.mouse.x;
+            const dy = this.y - this.effect.mouse.y;
+            const distance = Math.hypot(dx, dy);
+            const force = this.effect.mouse.radius / distance;
+
+            if (distance < this.effect.mouse.radius) {
+                const angle = Math.atan2(dy, dx);
+                this.pushX += Math.cos(angle) * force;
+                this.pushY += Math.sin(angle) * force;
+
+            }
+        }
+    }
             this.vx *= -1;
             this.changeRadius();
         }
