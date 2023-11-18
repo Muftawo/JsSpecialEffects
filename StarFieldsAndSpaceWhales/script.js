@@ -46,6 +46,8 @@ class Particle {
         this.minRadius = parameters.particleMinRadius;
         this.radius = Math.floor(Math.random() * this.maxRadius + this.minRadius);
 
+
+        // particle cordinates
         this.setPosition();
         // particle velocity 
         this.setVelocity();
@@ -68,6 +70,12 @@ class Particle {
         this.vy = Math.random() * parameters.particleMaxVelocity - parameters.particleMinVelocity;
     }
 
+    draw(context) {
+        // context.fillStyle = `hsl(${this.x * 0.5}, 100% , 50%)`;
+        context.beginPath();
+        context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        context.fill();
+        context.stroke();
     }
     changeRadius() {
         // this.radius += (Math.random() < 0.5 ? -1 : 1);
