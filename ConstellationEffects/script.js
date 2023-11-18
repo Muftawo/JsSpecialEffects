@@ -174,7 +174,7 @@ class Effect {
         });
     }
     connectParticles(context) {
-        const maxDistance = 100;
+        const maxDistance = parameters.particleConnectionMaxDistance;
         for (let a = 0; a < this.particles.length; a++) {
             for (let b = a; b < this.particles.length; b++) {
                 const dx = this.particles[a].x - this.particles[b].x;
