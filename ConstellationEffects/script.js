@@ -118,6 +118,9 @@ class Particle {
 
     }
 
+    reset() {
+        this.x = this.radius + Math.random() * (this.effect.width - this.radius * 2);
+        this.y = this.radius + Math.random() * (this.effect.height - this.radius * 2);
     }
 }
 
