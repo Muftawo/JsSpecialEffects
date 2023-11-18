@@ -44,7 +44,7 @@ class Particle {
         this.effect = effect;
         this.maxRadius = parameters.particleMaxRadius;
         this.minRadius = parameters.particleMinRadius;
-        this.radius = Math.random() * this.maxRadius + this.minRadius;
+        this.radius = Math.floor(Math.random() * this.maxRadius + this.minRadius);
 
         // particle cordinates
         this.x = this.radius + Math.random() * (this.effect.width - this.radius * 2);
