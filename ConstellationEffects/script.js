@@ -194,6 +194,22 @@ class Effect {
             }
         }
     }
+    resize(width, height) {
+        this.canvas.width = width;
+        this.canvas.height = height;
+
+        this.width = width;
+        this.height = height;
+
+        this.context.fillStyle = getGradient(ctx, width, height);
+        this.context.strokeStyle = 'white';
+
+        this.particles.forEach(
+            particle => {
+                particle.reset();
+            })
+
+    }
 
 }
 
