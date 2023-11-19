@@ -73,11 +73,7 @@ class Particle {
     }
 
     draw(context) {
-        // context.fillStyle = `hsl(${this.x * 0.5}, 100% , 50%)`;
-        context.beginPath();
-        context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        context.fill();
-        context.stroke();
+        context.drawImage(this.image, this.x - this.halfImageSize, this.y - this.halfImageSize, this.imageSize, this.imageSize)
     }
     changeRadius() {
         // this.radius += (Math.random() < 0.5 ? -1 : 1);
