@@ -68,8 +68,8 @@ class Particle {
     }
 
     setVelocity() {
-        this.vx = Math.random() * parameters.particleMaxVelocity - parameters.particleMinVelocity;
-        this.vy = Math.random() * parameters.particleMaxVelocity - parameters.particleMinVelocity;
+        this.vx = -1
+        // this.vy = Math.random() * parameters.particleMaxVelocity - parameters.particleMinVelocity;
     }
 
     draw(context) {
