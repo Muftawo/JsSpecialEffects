@@ -196,6 +196,8 @@ class Effect {
         }
     }
     handleParticles(context) {
+        this.whale.draw(context)
+
         this.connectParticles(context);
         this.particles.forEach(particle => {
             particle.draw(context);
