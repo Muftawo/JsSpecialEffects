@@ -231,8 +231,11 @@ class Effect {
 
         this.width = width;
         this.height = height;
+        
+        
+        this.whale.x = this.width * 0.5;
+        this.whale.y = this.height * 0.5;
 
-        this.context.fillStyle = getGradient(ctx, width, height);
         this.context.strokeStyle = 'white';
 
         this.particles.forEach(
