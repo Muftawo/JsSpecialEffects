@@ -100,22 +100,12 @@ class Particle {
     }
 
     onFrameCollision() {
-        //horizontal collision
-        if (this.x < this.radius) {
-            this.x = this.radius;
-            this.vx *= -1;
-        } else if (this.x > this.effect.width - this.radius) {
-            this.x = this.effect.width - this.radius;
-            this.vx *= -1;
-        }
 
-        //vertical collision
-        if (this.y < this.radius) {
-            this.y = this.radius;
-            this.vy *= -1;
-        } else if (this.y > this.effect.height - this.radius) {
-            this.y = this.effect.height - this.radius;
-            this.vy *= -1;
+
+        //horizontal collision
+        if (this.x < -this.imageSize - this.effect.maxDistance) {
+            this.x = this.effect.width + this.imageSize + this.effect.maxDistance;
+            this.y = this.imageSize + Math.random() * (this.effect.height - this.imageSize * 2);
         }
     }
 
