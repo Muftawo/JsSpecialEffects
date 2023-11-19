@@ -151,41 +151,13 @@ class Effect {
 
         this.maxDistance = parameters.particleConnectionMaxDistance;
 
-        this.mouse = {
-            x: 0,
-            y: 0,
-            pressed: false,
-            radius: parameters.mouseRadius
+
+            window.addEventListener('resize', e => {
+                this.resize(e.target.window.innerWidth, e.target.innerHeight);
+            })
+
+
         }
-        window.addEventListener('resize', e => {
-            this.resize(e.target.window.innerWidth, e.target.innerHeight);
-        })
-        window.addEventListener('mousemove', e => {
-            if (this.mouse.pressed) {
-                this.mouse.x = e.x;
-                this.mouse.y = e.y;
-
-            }
-        })
-        window.addEventListener('mousedown', e => {
-            this.mouse.pressed = true;
-            this.mouse.x = e.x;
-            this.mouse.y = e.y;
-
-        })
-        window.addEventListener('mouseup', e => {
-            this.mouse.pressed = false;
-        })
-
-
-    }
-    createParticles() {
-        for (let i = 0; i < this.numberOfParticles; i++) {
-            this.particles.push(new Particle(this));
-        }
-    }
-    handleParticles(context) {
-        this.whale.draw(context)
 
         this.connectParticles(context);
         this.particles.forEach(particle => {
