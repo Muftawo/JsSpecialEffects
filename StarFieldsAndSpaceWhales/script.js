@@ -133,8 +133,16 @@ class Particle {
     }
 
     reset() {
-        this.x = this.radius + Math.random() * (this.effect.width - this.radius * 2);
-        this.y = this.radius + Math.random() * (this.effect.height - this.radius * 2);
+
+class Whale {
+    constructor(effect) {
+        this.effect = effect;
+        this.x = this.effect.width * 0.5;
+        this.y = this.effect.height * 0.5;
+        this.image = document.getElementById('whale1');
+    }
+    draw(context) {
+        context.drawImage(this.image, this.x, this.y)
     }
 }
 
