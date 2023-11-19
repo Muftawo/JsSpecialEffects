@@ -126,7 +126,7 @@ class Particle {
 
         // move position
         this.x += (this.pushX *= this.friction) + this.vx;
-        this.y += (this.pushY *= this.friction) + this.vy;
+        this.y += (this.pushY *= this.friction);
 
         this.onFrameCollision();
 
