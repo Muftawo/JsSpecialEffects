@@ -36,7 +36,7 @@ function getGradient(context, width, height) {
 }
 
 
-ctx.fillStyle = getGradient(ctx, canvas.width, canvas.height);
+// ctx.fillStyle = getGradient(ctx, canvas.width, canvas.height);
 ctx.strokeStyle = 'white';
 
 class Particle {
