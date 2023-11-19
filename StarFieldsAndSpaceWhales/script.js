@@ -62,9 +62,9 @@ class Particle {
 
     }
 
-    setPosition() {
-        this.x = this.radius + Math.random() * (this.effect.width - this.radius * 2);
-        this.y = this.radius + Math.random() * (this.effect.height - this.radius * 2);
+    setCordinates() {
+        this.x = this.imageSize + Math.random() * (this.effect.width + this.effect.maxDistance * 2);
+        this.y = this.imageSize + Math.random() * (this.effect.height - this.imageSize * 2);
     }
 
     setVelocity() {
