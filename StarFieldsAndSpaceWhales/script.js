@@ -75,6 +75,7 @@ class Particle {
     draw(context) {
         context.drawImage(this.image, this.x - this.halfImageSize, this.y - this.halfImageSize, this.imageSize, this.imageSize)
     }
+
     changeRadius() {
         // this.radius += (Math.random() < 0.5 ? -1 : 1);
         // this.radius = Math.max(this.minRadius, Math.min(this.maxRadius, this.radius));
