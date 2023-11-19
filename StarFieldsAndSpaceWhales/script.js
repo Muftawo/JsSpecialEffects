@@ -46,6 +46,8 @@ class Particle {
         this.minRadius = parameters.particleMinRadius;
         this.radius = Math.floor(Math.random() * this.maxRadius + this.minRadius);
 
+        this.imageSize = this.radius * 5;
+        this.halfImageSize = this.imageSize * 0.5;
 
         // particle cordinates
         this.setPosition();
