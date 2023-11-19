@@ -58,6 +58,7 @@ class Particle {
         this.pushY = 0;
         this.friction = parameters.particleMouseFriction;
 
+        this.image = document.getElementById('star');
 
     }
 
