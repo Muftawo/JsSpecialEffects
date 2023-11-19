@@ -211,9 +211,9 @@ class Effect {
                 const dx = this.particles[a].x - this.particles[b].x;
                 const dy = this.particles[a].y - this.particles[b].y;
                 const distance = Math.hypot(dx, dy);
-                if (distance < maxDistance) {
+                if (distance < this.maxDistance) {
                     context.save();
-                    const opacity = 1 - (distance / maxDistance);
+                    const opacity = 1 - (distance / this.maxDistance);
                     context.globalAlpha = opacity;
                     context.beginPath();
                     context.moveTo(this.particles[a].x, this.particles[a].y);
