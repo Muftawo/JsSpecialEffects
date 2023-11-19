@@ -158,6 +158,9 @@ class Effect {
         this.particles = [];
         this.numberOfParticles = numberOfParticles ?? parameters.numberOfParticlesDefault; // change this later to user input 
         this.createParticles();
+        this.whale = new Whale(this);
+
+        this.maxDistance = parameters.particleConnectionMaxDistance;
 
         this.mouse = {
             x: 0,
