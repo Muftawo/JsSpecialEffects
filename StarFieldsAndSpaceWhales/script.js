@@ -49,9 +49,8 @@ class Particle {
         this.imageSize = this.radius * 5;
         this.halfImageSize = this.imageSize * 0.5;
 
-        // particle cordinates
-        this.setPosition();
-        // particle velocity 
+        this.setCordinates();
+
         this.setVelocity();
 
         // mouse push velocity
