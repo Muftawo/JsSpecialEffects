@@ -133,6 +133,9 @@ class Particle {
     }
 
     reset() {
+        this.setCordinates()
+    }
+}
 
 class Whale {
     constructor(effect) {
