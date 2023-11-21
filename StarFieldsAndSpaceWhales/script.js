@@ -1,22 +1,23 @@
 // setup 
-const canvas = document.getElementById('canvas1');
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-// console.log(ctx);
-// console.log(canvas);
+window.addEventListener('load', function () {
+    const canvas = document.getElementById('canvas1');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    // console.log(ctx);
+    // console.log(canvas);
 
-parameters = {
-    numberOfParticles: null,
-    numberOfParticlesDefault: 200,
-    particleMaxRadius: 12,
-    particleMinRadius: 1,
-    particleConnectionMaxDistance: 100,
-    particleMaxVelocity: 2,
-    particleMinVelocity: 0.5,
-    particleMouseFriction: 0.9,
+    parameters = {
+        numberOfParticles: null,
+        numberOfParticlesDefault: 200,
+        particleMaxRadius: 12,
+        particleMinRadius: 1,
+        particleConnectionMaxDistance: 100,
+        particleMaxVelocity: 2,
+        particleMinVelocity: 0.5,
+        particleWhaleFriction: 0.9,
 
-    mouseRadius: 150,
+        whaleRadius: 250,
 
 }
 
