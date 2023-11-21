@@ -19,26 +19,26 @@ window.addEventListener('load', function () {
 
         whaleRadius: 250,
 
-}
-
-function getGradient(context, width, height) {
-
-    gradientColors = {
-        top: 'white',
-        middle: 'gold',
-        bottom: 'orangered'
     }
-    const gradient = context.createLinearGradient(0, 0, width, height);
-    gradient.addColorStop(0, gradientColors.top);
-    gradient.addColorStop(0.5, gradientColors.middle);
-    gradient.addColorStop(1, gradientColors.bottom);
 
-    return gradient
-}
+    function getGradient(context, width, height) {
+
+        gradientColors = {
+            top: 'white',
+            middle: 'gold',
+            bottom: 'orangered'
+        }
+        const gradient = context.createLinearGradient(0, 0, width, height);
+        gradient.addColorStop(0, gradientColors.top);
+        gradient.addColorStop(0.5, gradientColors.middle);
+        gradient.addColorStop(1, gradientColors.bottom);
+
+        return gradient
+    }
 
 
-// ctx.fillStyle = getGradient(ctx, canvas.width, canvas.height);
-ctx.strokeStyle = 'white';
+    // ctx.fillStyle = getGradient(ctx, canvas.width, canvas.height);
+    ctx.strokeStyle = 'white';
 
 class Particle {
     constructor(effect) {
