@@ -62,94 +62,137 @@ window.addEventListener('load', function () {
 
         }
 
-    setCordinates() {
-        this.x = this.imageSize + Math.random() * (this.effect.width + this.effect.maxDistance * 2);
-        this.y = this.imageSize + Math.random() * (this.effect.height - this.imageSize * 2);
-    }
+        setCordinates() {
+            this.x = this.imageSize + Math.random() * (this.effect.width + this.effect.maxDistance * 2);
+            this.y = this.imageSize + Math.random() * (this.effect.height);
+             //original cordinates
+            this.originalX = this.x;
+            this.originalY = this.y;
 
-    setVelocity() {
-        this.vx = -1
-        // this.vy = Math.random() * parameters.particleMaxVelocity - parameters.particleMinVelocity;
-    }
 
-    draw(context) {
-        context.drawImage(this.image, this.x - this.halfImageSize, this.y - this.halfImageSize, this.imageSize, this.imageSize)
-    }
+        }
 
-    changeRadius() {
-        // this.radius += (Math.random() < 0.5 ? -1 : 1);
-        // this.radius = Math.max(this.minRadius, Math.min(this.maxRadius, this.radius));
-        // this.radius = parameters.radius;//Math.random() * this.maxRadius + this.minRadius;
-        // console.log(`radius ${this.radius} x = ${this.x} y ${this.y} vx ${this.vx} vy ${this.vy}`);
-    }
+        setVelocity() {
+            this.vx = -0.5
+            // this.vy = Math.random() * parameters.particleMaxVelocity - parameters.particleMinVelocity;
+        }
 
-    onMousePressed() {
-        if (this.effect.mouse.pressed) {
-            const dx = this.x - this.effect.mouse.x;
-            const dy = this.y - this.effect.mouse.y;
+        draw(context) {
+            context.drawImage(this.image, this.x - this.halfImageSize, this.y - this.halfImageSize, this.imageSize, this.imageSize)
+        }
+
+        changeRadius() {
+            // this.radius += (Math.random() < 0.5 ? -1 : 1);
+            // this.radius = Math.max(this.minRadius, Math.min(this.maxRadius, this.radius));
+            // this.radius = parameters.radius;//Math.random() * this.maxRadius + this.minRadius;
+            // console.log(`radius ${this.radius} x = ${this.x} y ${this.y} vx ${this.vx} vy ${this.vy}`);
+        }
+
+        onWhaleCollission() {
+
+            const dx = this.x - this.effect.whale.x;
+            const dy = this.y - this.effect.whale.y;
             const distance = Math.hypot(dx, dy);
-            const force = this.effect.mouse.radius / distance;
+            const force = this.effect.whale.radius / distance;
 
-            if (distance < this.effect.mouse.radius) {
+            if (distance < this.effect.whale.radius) {
                 const angle = Math.atan2(dy, dx);
                 this.pushX += Math.cos(angle) * force;
                 this.pushY += Math.sin(angle) * force;
 
             }
+
+        }
+
+        onFrameCollision() {
+            //horizontal collision
+            if (this.x < -this.imageSize - this.effect.maxDistance) {
+                this.x = this.effect.width + this.imageSize + this.effect.maxDistance;
+                this.y = this.imageSize + Math.random() * (this.effect.height - this.imageSize * 2);
+            }
+        }
+        reposition(){
+
+        }
+
+
+        update() {
+            this.onWhaleCollission();
+
+            // move position
+            this.x += (this.pushX *= this.friction) + this.vx;
+            this.y += (this.pushY *= this.friction);
+
+            // this.x = originalX
+            // this.y = originalY
+            // console.log(`cur cor ${this.x} original cor ${originalX}` );
+
+            this.onFrameCollision();
+
+        }
+
+        reset() {
+            this.setCordinates()
         }
     }
 
-    onFrameCollision() {
+    class Whale {
+        constructor(effect) {
+            this.effect = effect;
+            this.x = this.effect.width * 0.4;
+            this.y = this.effect.height * 0.5;
+            this.image = document.getElementById('whale3');
+            this.angle = 0;
+            this.va = 0.01;
+            this.curve = this.effect.height * 0.1;
+            this.spriteWidth = 420;
+            this.spriteHeight = 285;
+            this.frameX = 0;
+            this.frameY = Math.floor(Math.random() * 4);
+            this.maxFrame = 38;
+            this.frameTimer = 0;
+            this.frameInterval = 1000 / 50;
+            this.radius = parameters.whaleRadius;
 
+        }
+        draw(context) {
+            context.save();
+            context.translate(this.x, this.y);
+            context.rotate(Math.cos(this.angle) * 0.4);
+            context.drawImage(this.image, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, 0 - this.spriteWidth * 0.5, 0 - this.spriteHeight * 0.5, this.spriteWidth, this.spriteHeight);
+            context.restore();
+        }
+        update(deltaTime) {
+            this.angle += this.va;
+            this.y = this.effect.height * 0.5 + Math.sin(this.angle) * this.curve;
 
-        //horizontal collision
-        if (this.x < -this.imageSize - this.effect.maxDistance) {
-            this.x = this.effect.width + this.imageSize + this.effect.maxDistance;
-            this.y = this.imageSize + Math.random() * (this.effect.height - this.imageSize * 2);
+            if (this.angle > Math.PI * 2) this.angle = 0;
+
+            //fps 
+            if (this.frameTimer > this.frameInterval) {
+                //sprite animation 
+                this.frameX < this.maxFrame ? this.frameX++ : this.frameX = 0;
+                this.frameTimer = 0
+            } else {
+                this.frameTimer += deltaTime;
+
+            }
+
         }
     }
 
+    class Effect {
+        constructor(canvas, context, numberOfParticles) {
+            this.canvas = canvas;
+            this.context = context;
+            this.width = this.canvas.width;
+            this.height = this.canvas.height;
+            this.particles = [];
+            this.numberOfParticles = numberOfParticles ?? parameters.numberOfParticlesDefault; // change this later to user input 
+            this.createParticles();
+            this.whale = new Whale(this);
 
-    update() {
-        this.onMousePressed();
-
-        // move position
-        this.x += (this.pushX *= this.friction) + this.vx;
-        this.y += (this.pushY *= this.friction);
-
-        this.onFrameCollision();
-
-    }
-
-    reset() {
-        this.setCordinates()
-    }
-}
-
-class Whale {
-    constructor(effect) {
-        this.effect = effect;
-        this.x = this.effect.width * 0.5;
-        this.y = this.effect.height * 0.5;
-        this.image = document.getElementById('whale1');
-    }
-    draw(context) {
-        context.drawImage(this.image, this.x, this.y)
-    }
-}
-
-class Effect {
-    constructor(canvas, context, numberOfParticles) {
-        this.canvas = canvas;
-        this.context = context;
-        this.width = this.canvas.width;
-        this.height = this.canvas.height;
-        this.particles = [];
-        this.numberOfParticles = numberOfParticles ?? parameters.numberOfParticlesDefault; // change this later to user input 
-        this.createParticles();
-        this.whale = new Whale(this);
-
-        this.maxDistance = parameters.particleConnectionMaxDistance;
+            this.maxDistance = parameters.particleConnectionMaxDistance;
 
 
             window.addEventListener('resize', e => {
@@ -158,64 +201,78 @@ class Effect {
 
 
         }
+        createParticles() {
+            for (let i = 0; i < this.numberOfParticles; i++) {
+                this.particles.push(new Particle(this));
+            }
+        }
+        handleParticles(context, deltaTime) {
+            this.whale.draw(context);
+            this.whale.update(deltaTime);
 
-        this.connectParticles(context);
-        this.particles.forEach(particle => {
-            particle.draw(context);
-            particle.update();
-        });
-    }
-    connectParticles(context) {
-        for (let a = 0; a < this.particles.length; a++) {
-            for (let b = a; b < this.particles.length; b++) {
-                const dx = this.particles[a].x - this.particles[b].x;
-                const dy = this.particles[a].y - this.particles[b].y;
-                const distance = Math.hypot(dx, dy);
-                if (distance < this.maxDistance) {
-                    context.save();
-                    const opacity = 1 - (distance / this.maxDistance);
-                    context.globalAlpha = opacity;
-                    context.beginPath();
-                    context.moveTo(this.particles[a].x, this.particles[a].y);
-                    context.lineTo(this.particles[b].x, this.particles[b].y);
-                    context.stroke();
-                    context.restore();
+            this.connectParticles(context);
+            this.particles.forEach(particle => {
+                particle.draw(context);
+                particle.update();
+            });
+        }
+        connectParticles(context) {
+            for (let a = 0; a < this.particles.length; a++) {
+                for (let b = a; b < this.particles.length; b++) {
+                    const dx = this.particles[a].x - this.particles[b].x;
+                    const dy = this.particles[a].y - this.particles[b].y;
+                    const distance = Math.hypot(dx, dy);
+                    if (distance < this.maxDistance) {
+                        context.save();
+                        const opacity = 1 - (distance / this.maxDistance);
+                        context.globalAlpha = opacity;
+                        context.beginPath();
+                        context.moveTo(this.particles[a].x, this.particles[a].y);
+                        context.lineTo(this.particles[b].x, this.particles[b].y);
+                        context.stroke();
+                        context.restore();
 
+                    }
                 }
             }
         }
+        resize(width, height) {
+            this.canvas.width = width;
+            this.canvas.height = height;
+
+            this.width = width;
+            this.height = height;
+
+
+            this.whale.x = this.width * 0.5;
+            this.whale.y = this.height * 0.5;
+            this.whale.curve = this.height * 0.2;
+
+            this.context.strokeStyle = 'white';
+
+            this.particles.forEach(
+                particle => {
+                    particle.reset();
+                })
+
+        }
+
     }
-    resize(width, height) {
-        this.canvas.width = width;
-        this.canvas.height = height;
 
-        this.width = width;
-        this.height = height;
-        
-        
-        this.whale.x = this.width * 0.5;
-        this.whale.y = this.height * 0.5;
 
-        this.context.strokeStyle = 'white';
+    const effect = new Effect(canvas, ctx, parameters.numberOfParticles);
 
-        this.particles.forEach(
-            particle => {
-                particle.reset();
-            })
+    let lastTime = 0;
+    function animate(timeStamp) {
+        const deltaTime = timeStamp - lastTime;
+        lastTime = timeStamp;
+        // console.log(deltaTime)
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        effect.handleParticles(ctx, deltaTime);
+        requestAnimationFrame(animate);
 
     }
 
-}
+    animate(0);
 
-
-const effect = new Effect(canvas, ctx, parameters.numberOfParticles);
-
-
-function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    effect.handleParticles(ctx);
-    requestAnimationFrame(animate);
-
-}
-
-animate();
+})
