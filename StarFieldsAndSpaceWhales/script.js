@@ -40,28 +40,27 @@ window.addEventListener('load', function () {
     // ctx.fillStyle = getGradient(ctx, canvas.width, canvas.height);
     ctx.strokeStyle = 'white';
 
-class Particle {
-    constructor(effect) {
-        this.effect = effect;
-        this.maxRadius = parameters.particleMaxRadius;
-        this.minRadius = parameters.particleMinRadius;
-        this.radius = Math.floor(Math.random() * this.maxRadius + this.minRadius);
+    class Particle {
+        constructor(effect) {
+            this.effect = effect;
+            this.maxRadius = parameters.particleMaxRadius;
+            this.minRadius = parameters.particleMinRadius;
+            this.radius = Math.floor(Math.random() * this.maxRadius + this.minRadius);
 
-        this.imageSize = this.radius * 5;
-        this.halfImageSize = this.imageSize * 0.5;
+            this.imageSize = this.radius * 5;
+            this.halfImageSize = this.imageSize * 0.5;
 
-        this.setCordinates();
+            this.setCordinates();
 
-        this.setVelocity();
+            // this.setVelocity();
+            this.vx = -1.5
+            // whale push velocity
+            this.pushX = 0;
+            this.pushY = 0;
+            this.friction = parameters.particleWhaleFriction;
+            this.image = document.getElementById('star');
 
-        // mouse push velocity
-        this.pushX = 0;
-        this.pushY = 0;
-        this.friction = parameters.particleMouseFriction;
-
-        this.image = document.getElementById('star');
-
-    }
+        }
 
     setCordinates() {
         this.x = this.imageSize + Math.random() * (this.effect.width + this.effect.maxDistance * 2);
