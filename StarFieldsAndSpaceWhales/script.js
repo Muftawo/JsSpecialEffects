@@ -187,6 +187,7 @@ window.addEventListener('load', function () {
             this.context = context;
             this.width = this.canvas.width;
             this.height = this.canvas.height;
+            this.maxDistance = parameters.particleConnectionMaxDistance;
             this.particles = [];
             this.numberOfParticles = numberOfParticles ?? parameters.numberOfParticlesDefault; // change this later to user input 
             this.createParticles();
@@ -266,7 +267,6 @@ window.addEventListener('load', function () {
     function animate(timeStamp) {
         const deltaTime = timeStamp - lastTime;
         lastTime = timeStamp;
-        // console.log(deltaTime)
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         effect.handleParticles(ctx, deltaTime);
         requestAnimationFrame(animate);
